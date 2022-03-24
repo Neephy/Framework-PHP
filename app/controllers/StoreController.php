@@ -40,10 +40,24 @@ class StoreController extends \controllers\ControllerBase{
             $name = $produit->getName();
             $stock = $produit->getStock();
             $price = $produit->getPrice();
-            $this->loadView('StoreController/get.html', ['name'=>$name, 'stock'=>$stock, 'price'=>$price]);
+            $this->loadView('StoreController/produits.html', ['name'=>$name, 'stock'=>$stock, 'price'=>$price]);
 
         }
 
+    }
+
+    /**
+     * @throws \Exception
+     */
+    #[Get(path:"allProducts/", name: "allProducts")]
+    public function allProducts() {
+        $produits = DAO::getAll(Product::class);
+        foreach ($produits as $produit) {
+            $name = $produit->getName();
+            $stock = $produit->getStock();
+            $price = $produit->getPrice();
+            $this->loadView('StoreController/produits.html', ['name'=>$name, 'stock'=>$stock, 'price'=>$price]);
+        }
     }
 
 }
