@@ -18,17 +18,31 @@ class StoreController extends \controllers\ControllerBase{
 
         $count=DAO::count(Product::class);
         $this->loadView("StoreController/index.html", ['count' => $count]);
-        //$name1 = $sections->getName();
         $sections = DAO::getAll(Section::class);
         foreach ($sections as $section) {
             $name = $section->getName();
             $description = $section->getDescription();
             $id = $section->getId();
-            $this->loadView('StoreController/section.html', ['name' => $name, 'desc' => $description, 'id' => $id]);
+            $products = $section->getProducts();
+            $count = count($products);
+            $this->loadView('StoreController/section.html', ['name' => $name, 'desc' => $description, 'id' => $id, 'count' => $count]);
         }
 	}
 
-    public function section($id) {
+    /**
+     * @throws \Exception
+     */
+    #[Get(path:"section/{id}", name:"section")]
+    public function section($id){
+        $section = DAO::getById(Section::class, $id);
+        $produits = $section->getProducts();
+        foreach ($produits as $produit) {
+            $name = $produit->getName();
+            $stock = $produit->getStock();
+            $price = $produit->getPrice();
+            $this->loadView('StoreController/get.html', ['name'=>$name, 'stock'=>$stock, 'price'=>$price]);
+
+        }
 
     }
 

@@ -5,15 +5,15 @@ namespace controllers;
   */
 class Section extends \controllers\ControllerBase{
 
+
 	public function index(){
-		
-	}
-
-	
-	public function get($id){
-		
-		$this->loadView('Section/get.html');
 
 	}
+
+
+    /**
+     * @throws \Exception
+     */
+
 
 }
